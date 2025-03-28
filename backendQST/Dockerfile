@@ -1,17 +1,10 @@
 # Use an official Maven image to build the project
 FROM maven:3.8.6-openjdk-17 AS build
-
-# Set the working directory inside the container
 WORKDIR /app
-
-# Copy only necessary files for dependency caching
 COPY pom.xml .
 COPY mvnw .
 
-# Download dependencies to cache them
 RUN mvn dependency:go-offline
-
-# Copy the entire source code and build the application
 COPY src src
 RUN mvn clean package -DskipTests
 
